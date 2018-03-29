@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DevOpsXF.DAL;
 using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
@@ -18,14 +19,25 @@ namespace DevOpsXF
 				_originalValue = double.Parse(val);
 			}
 			catch (Exception e) {
-				//ignored for now
+				Crashes.TrackError(e);
 			}
 		}
 
 		protected override async void OnAppearing() {
 			base.OnAppearing();
 
-			Crashes.GenerateTestCrash();
+			try {
+				Crashes.GenerateTestCrash();
+			}
+			catch (Exception e) {
+				var properties = new Dictionary<string, string>
+				{
+					{ "Value", _originalValue.ToString()},
+					{ "BaseCurrency", "EUR"},
+					{ "ToCurrency", "JPY"}
+				};
+				Crashes.TrackError(e, properties);
+			}
 
 			var resultValue = await DataService.Instance.GetResult(_originalValue, "EUR", "JPY");
 			ResultLabel.Text = $"{_originalValue:F2} EUR = {resultValue:F2} JPY";
