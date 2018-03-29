@@ -2,6 +2,9 @@ using DevOpsXF.DAL;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Distribute;
+
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace DevOpsXF
 {
@@ -9,6 +12,10 @@ namespace DevOpsXF
 		public App() {
 			MainPage = new NavigationPage(new MainPage());
 			DataService.Instance.Init("http://data.fixer.io", "8754892b614a90b5cb1debdf6948e7dc");
+
+			AppCenter.Start("ios={Your Xamarin iOS App Secret};" +
+			                "android=cbd6369e-9944-4284-9bff-3cf550ab7907;",
+							typeof(Distribute));
 		}
 	}
 }
