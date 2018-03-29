@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Microsoft.AppCenter.Analytics;
 using Xamarin.Forms;
 
 namespace DevOpsXF
@@ -18,6 +20,9 @@ namespace DevOpsXF
 
 			var resultPage = new ResultPage();
 			resultPage.SetOriginalValue(ValueEntry.Text);
+
+			Analytics.TrackEvent("CalculateButtonTapped", new Dictionary<string, string>{{"Value", ValueEntry.Text}});
+
 			await Navigation.PushAsync(resultPage);
 		}
 	}
