@@ -16,7 +16,10 @@ namespace DevOpsXF.DAL
 		DataService() {}
 
 	    public void Init(string apiBaseAddress, string accessToken) {
-		    _apiService = GetApiService(apiBaseAddress);
+		    _apiService = RestService.For<IRestApiService>(new HttpClient(new HttpLoggingHandler()) {
+			    BaseAddress = new Uri(apiBaseAddress),
+			    Timeout = TimeSpan.FromMinutes(10)
+		    });
 		    _accessToken = accessToken;
 	    }
 
@@ -28,14 +31,6 @@ namespace DevOpsXF.DAL
 		    catch (Exception e) {
 			    return 0;
 		    }
-	    }
-
-	    static IRestApiService GetApiService(string apiBaseAddress) {
-			var client = new HttpClient(new HttpLoggingHandler()) {
-			    BaseAddress = new Uri(apiBaseAddress),
-			    Timeout = TimeSpan.FromMinutes(10),
-		    };
-		    return RestService.For<IRestApiService>(client);
 	    }
 	}
 }
