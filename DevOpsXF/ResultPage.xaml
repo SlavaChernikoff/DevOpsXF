@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DevOpsXF.ResultPage" Title="ResultPage">
+    <ContentPage.Content>
+		<StackLayout 
+			VerticalOptions="CenterAndExpand" 
+			HorizontalOptions="CenterAndExpand">
+            <Label Text="Calculating..." FontSize="24" FontAttributes="Bold" HorizontalTextAlignment="Center" x:Name="ResultLabel"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
