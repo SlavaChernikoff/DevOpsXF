@@ -1,5 +1,6 @@
 using System;
 using DevOpsXF.DAL;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 
 namespace DevOpsXF
@@ -9,7 +10,7 @@ namespace DevOpsXF
 
 		public ResultPage ()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
 
 		public void SetOriginalValue(string val) {
@@ -23,6 +24,8 @@ namespace DevOpsXF
 
 		protected override async void OnAppearing() {
 			base.OnAppearing();
+
+			Crashes.GenerateTestCrash();
 
 			var resultValue = await DataService.Instance.GetResult(_originalValue, "EUR", "JPY");
 			ResultLabel.Text = $"{_originalValue:F2} EUR = {resultValue:F2} JPY";
