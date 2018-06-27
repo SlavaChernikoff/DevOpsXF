@@ -5,7 +5,7 @@ namespace DevOpsXF.DAL
 {
 	public interface IRestApiService
     {
-	    [Get("/api/latest")]
-	    Task<RatesResultDto> GetLatestRates([AliasAs("access_key")]string accessKey, [AliasAs("base")]string baseCurrency, [AliasAs("symbols")]string toCurrency);
+	    [Get("/api/live")]
+	    Task<RatesResultDto> GetLatestRates(string access_key, string currencies, int format);
 	}
 }

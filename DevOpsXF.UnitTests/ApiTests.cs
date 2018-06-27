@@ -8,8 +8,8 @@ namespace DevOpsXF.UnitTests
 {
     [TestClass]
     public class ApiTests {
-	    const string ApiBaseAddress = "http://data.fixer.io";
-	    const string AccessKey = "8754892b614a90b5cb1debdf6948e7dc";
+	    const string ApiBaseAddress = "http://apilayer.net";
+	    const string AccessKey = "1809397aeb646717dc0f4b44f820d81c";
 
 	    IRestApiService _apiService;
 
@@ -17,7 +17,7 @@ namespace DevOpsXF.UnitTests
 	    public void SetUp() {
 			var client = new HttpClient {
 				BaseAddress = new Uri(ApiBaseAddress),
-				Timeout = TimeSpan.FromMinutes(10),
+				Timeout = TimeSpan.FromMinutes(1),
 			};
 			_apiService = RestService.For<IRestApiService>(client);
 		}
@@ -25,13 +25,13 @@ namespace DevOpsXF.UnitTests
         [TestMethod]
         public void TestLatestRatesEurJpy()
         {
-	        var ratesTask = _apiService.GetLatestRates(AccessKey, "EUR", "JPY");
+	        var ratesTask = _apiService.GetLatestRates(AccessKey, "EUR,JPY", 1);
 	        ratesTask.Wait();
 	        var result = ratesTask.Result;
 
 			Assert.AreNotEqual(result, null);
-			Assert.AreNotEqual(result.Rates, null);
-			Assert.AreNotEqual(result.Rates.Count, 0);
+			Assert.AreNotEqual(result.Quotes, null);
+			Assert.AreNotEqual(result.Quotes.Count, 0);
         }
     }
 }

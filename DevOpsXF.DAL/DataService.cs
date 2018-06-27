@@ -18,15 +18,15 @@ namespace DevOpsXF.DAL
 	    public void Init(string apiBaseAddress, string accessToken) {
 		    _apiService = RestService.For<IRestApiService>(new HttpClient(new HttpLoggingHandler()) {
 			    BaseAddress = new Uri(apiBaseAddress),
-			    Timeout = TimeSpan.FromMinutes(10)
+			    Timeout = TimeSpan.FromMinutes(1)
 		    });
 		    _accessToken = accessToken;
 	    }
 
 	    public async Task<double> GetResult(double originalValue, string fromCurrency, string toCurrency) {
 		    try {
-			    var res = await _apiService.GetLatestRates(_accessToken, fromCurrency, toCurrency).ConfigureAwait(false);
-			    return res.Rates[toCurrency] * originalValue;
+			    var res = await _apiService.GetLatestRates(_accessToken, $"{fromCurrency},{toCurrency}", 1).ConfigureAwait(false);
+			    return res.Quotes[res.Source+toCurrency]/res.Quotes[res.Source+fromCurrency] * originalValue;
 		    }
 		    catch (Exception e) {
 			    return 0;
